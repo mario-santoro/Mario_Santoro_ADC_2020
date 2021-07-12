@@ -64,6 +64,7 @@ public class Example {
 			 
 			 List<String> questions= peer.getUserProfileQuestions();
 			 List<Integer> answer= new ArrayList<Integer>();
+			 List<String> friends;
 			 for(int i=0; i<questions.size();i++) {
 				terminal.printf( questions.get(i));
 				answer.add( textIO.newIntInputReader()
@@ -72,65 +73,74 @@ public class Example {
 						.read("Scelta"));
 			 }
 			 
-				terminal.printf("\nInserisci un nickname\n");
-			 _nickname = textIO.newStringInputReader()
-				        .read("Nickname:");
-			 String profile_key= peer.createAuserProfileKey(answer);
-			 
-			if(peer.join(profile_key, _nickname)) {
-				terminal.printf("\nAcesso eseguito! Benvenuto!!\n");	
-				while(true) {
-					printMenu(terminal);
-					
-					int option = textIO.newIntInputReader()
-							.withMaxVal(2)
-							.withMinVal(1)
-							.read("Option");
-					switch (option) {
-					case 1:
-						terminal.printf("\nEcco i tuoi amici:\n");
-						List<String> friends= peer.getFriends();
-						if(friends!=null && friends.size()>0) {
-							for(int i=0;i<friends.size();i++) {
-								terminal.printf("%s\n", friends.get(i));							
-							}
-							terminal.printf("A chi vuoi mandare un messaggio?\n");
-							String choice= textIO.newStringInputReader()
-							        .read("Nickname:");
-							terminal.printf("\nScrivi messaggio\n");
-							String message = textIO.newStringInputReader()
-							        .withDefaultValue("default-message")
-							        .read(" Message:");
-							if(peer.sendMessage(choice, message)) {
-								terminal.printf("Messaggio inviato!\n");
-							}else {
-								terminal.printf("Nickname inesitente\n");
-							}
-						}else {
-							terminal.printf("Non ci sono amici con interessi comuni nella rete per ora\n");	
-						}
-						break;
-					case 2:
-						terminal.printf("\nSei sicuro di uscire dalla rete?\n");
-						boolean exit = textIO.newBooleanInputReader().withDefaultValue(false).read("exit?");
-						if(exit) {
-							peer.leaveNetwork(_nickname);
-							System.exit(0);
-						}
-						break;
-	
-					default:
-						break;
-					}
-				}
-
-
-			
-			} else {
-				
-				terminal.printf("Nickname esistente");
+			terminal.printf("\nInserisci un nickname\n");
+			 _nickname = textIO.newStringInputReader().read("Nickname:");
+			String profile_key= peer.createAuserProfileKey(answer);			 
+			while(!peer.join(profile_key, _nickname)) {
+				terminal.printf("Nickname esistente. Per favore riprova.\n");
+				 _nickname = textIO.newStringInputReader()
+					        .read("Nickname:");
 			}
-			
+			terminal.printf("\nAcesso eseguito! Benvenuto!!\n");	
+			while(true) {
+				printMenu(terminal);
+				
+				int option = textIO.newIntInputReader()
+						.withMaxVal(3)
+						.withMinVal(1)
+						.read("Option");
+				switch (option) {
+				case 1:
+					terminal.printf("\nEcco i tuoi amici:\n");
+				    friends= peer.getFriends();
+					if(friends!=null && friends.size()>0) {
+						for(int i=0;i<friends.size();i++) {
+							terminal.printf("%s\n", friends.get(i));							
+						}						
+					}else {
+						terminal.printf("Non ci sono amici con interessi comuni nella rete per ora\n");	
+					}
+					break;
+				case 2:
+					terminal.printf("\nA quale amico vuoi mandare il messaggio:\n");
+					friends= peer.getFriends();
+					if(friends!=null && friends.size()>0) {
+						for(int i=0;i<friends.size();i++) {
+							terminal.printf("%s\n", friends.get(i));							
+						}
+				 
+						String choice= textIO.newStringInputReader()
+						        .read("Nickname:");
+						terminal.printf("\nScrivi messaggio\n");
+						String message = textIO.newStringInputReader()
+						        .withDefaultValue("default-message")
+						        .read(" Message:");
+						if(peer.sendMessage(choice, message)) {
+							terminal.printf("Messaggio inviato!\n");
+						}else {
+							terminal.printf("Nickname inesitente\n");
+						}
+					}else {
+						terminal.printf("Non ci sono amici con interessi comuni nella rete per ora\n");	
+					}
+					 
+					break;
+				case 3:
+					terminal.printf("\nSei sicuro di uscire dalla rete?\n");
+					boolean exit = textIO.newBooleanInputReader().withDefaultValue(false).read("exit?");
+					if(exit) {
+						peer.leaveNetwork(_nickname);
+						System.exit(0);
+					}
+					break;
+
+				default:
+					break;
+				}
+			}
+
+
+		
 
 		}  
 		catch (CmdLineException clEx)  
@@ -142,8 +152,9 @@ public class Example {
 	}
 	public static void printMenu(TextTerminal terminal) {
 	
-		terminal.printf("\n1 - LISTA DI AMICI E INVIO MESSAGGI\n"); 
-		terminal.printf("\n2 - EXIT\n");
+		terminal.printf("\n1 - LISTA DI AMICI\n"); 
+		terminal.printf("\n2 - INVIO MESSAGGIO\n"); 
+		terminal.printf("\n3 - EXIT\n");
 
 	}
 

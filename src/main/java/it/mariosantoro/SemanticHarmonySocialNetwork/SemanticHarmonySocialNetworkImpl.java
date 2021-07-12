@@ -70,7 +70,7 @@ public class SemanticHarmonySocialNetworkImpl implements SemanticHarmonySocialNe
 	public String createAuserProfileKey(List<Integer> _answer) {
 		String _profile_key="";
 		for(int i=0;i<_answer.size();i++) {
-			_profile_key.concat(_answer.get(i).toString());
+			_profile_key+=_answer.get(i);
 			
 		}
 				
@@ -81,18 +81,21 @@ public class SemanticHarmonySocialNetworkImpl implements SemanticHarmonySocialNe
 	public boolean join(String _profile_key, String _nick_name) {
 		try {
 			this._nick_name=_nick_name;
+ 
 			//creo oggetto utente assegnando nick_name, profile_key e indirizzo del peer 
 			User u= new User(_nick_name, peer.peerAddress(), _profile_key);
-			List<String> users= new ArrayList<String>();
-			 List<String> friends= new ArrayList<String>();
+			List<String> users= new ArrayList<String>(); //lista di nickname memorizzati nella rete
+			 List<String> friends= new ArrayList<String>();//lista di amici del nuovo utente
 			//controllo che il nickname non sia già assegnato 
 			FutureGet futureGet = _dht.get(Number160.createHash(_nick_name)).start();
 			futureGet.awaitUninterruptibly();
-			if( futureGet.isEmpty()) {			
+			if( futureGet.isEmpty()) {	
+				
 				//recupero dalla dht la lista delgi utenti (loro nickname)
 				 FutureGet futureGet2 = _dht.get(Number160.createHash("users")).start().awaitUninterruptibly();
 				 //controllo che non sia vouta
-				 if(!futureGet2.isEmpty()) {					
+				 if(!futureGet2.isEmpty()) {		
+					
 					 //converto oggetto futureGet in Lista di stringhe
 					 users = (List<String>) futureGet2.dataMap().values().iterator().next().object();
 
@@ -103,13 +106,16 @@ public class SemanticHarmonySocialNetworkImpl implements SemanticHarmonySocialNe
 						 	FutureGet futureGet3 = _dht.get(Number160.createHash(users.get(i))).start().awaitUninterruptibly();
 						 	
 	                        User newFriend = (User) futureGet3.dataMap().values().iterator().next().object();
-						  // controllo distance hamming e invio messaggio
-	                       int distance= HammingDistance(_profile_key, newFriend.getProfileKey());
-	                        if(distance<3) {
+						  // controllo distance hamming e invio messaggio	                    
+	                       int distance= HammingDistance(_profile_key, newFriend.getProfileKey());	                      
+	                       if(distance<3) {
 	                        	 FutureDirect d = _dht.peer().sendDirect(newFriend.getPeerAddress()).object( "hai un nuovo amico: " + _nick_name).start().awaitUninterruptibly();
 	                        	 newFriend.getFriends().add(_nick_name);
 	                        	 friends.add(newFriend.getNickname());
-	                        }
+	                        	 _dht.put(Number160.createHash(newFriend.getNickname())).data(new Data(newFriend)).start().awaitUninterruptibly();
+	                       }
+	                        
+	                      
 					 }
 					 
 				
@@ -117,10 +123,8 @@ public class SemanticHarmonySocialNetworkImpl implements SemanticHarmonySocialNe
 				 				 
 				 //aggiunta del nuovo utente alla lista di utenti nella dht
 				   users.add(_nick_name);
-				   u.setFriends(friends);			 
+				   u.setFriends(friends);					  
                    _dht.put(Number160.createHash("users")).data(new Data(users)).start().awaitUninterruptibly();
-
-                   ////////////PROBLEMA QUI
                    _dht.put(Number160.createHash(_nick_name)).data(new Data(u)).start().awaitUninterruptibly();
                    return true;
 			}else {
@@ -155,7 +159,7 @@ public class SemanticHarmonySocialNetworkImpl implements SemanticHarmonySocialNe
 		int distance=0;
 		
 		for(int i=0;i<profile_key_one.length();i++){
-			if(profile_key_one.charAt(i) == profile_key_two.charAt(i) ) {
+			if(profile_key_one.charAt(i) != profile_key_two.charAt(i) ) {
 				distance++;
 				
 			}
