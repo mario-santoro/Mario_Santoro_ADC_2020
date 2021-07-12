@@ -1,6 +1,7 @@
 package it.mariosantoro.SemanticHarmonySocialNetwork;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -55,8 +56,7 @@ public class TestSemanticHarmonySocialNetwork {
 	
 	@Test
 	void testCaseCreateAUserProfileKey(TestInfo testInfo){
-		
-		
+				
 		List<Integer> answer0=new ArrayList<Integer>();
 		answer0.add(1);
 		answer0.add(1);
@@ -101,8 +101,7 @@ public class TestSemanticHarmonySocialNetwork {
 	
 	@Test
 	void testCaseJoin(TestInfo testInfo){
-		
-		
+				
 		List<Integer> answer0=new ArrayList<Integer>();
 		answer0.add(1);
 		answer0.add(1);
@@ -118,8 +117,7 @@ public class TestSemanticHarmonySocialNetwork {
 	
 	
 	@Test
-	void testCaseGetFriends(TestInfo testInfo){
-		
+	void testCaseGetFriends(TestInfo testInfo){		
 		
 		List<Integer> answer0=new ArrayList<Integer>();
 		answer0.add(1);
@@ -153,8 +151,7 @@ public class TestSemanticHarmonySocialNetwork {
 		answer2.add(1);
 		String key2=peer2.createAuserProfileKey(answer2);
 		peer2.join(key2, "peer2");
-		
-		
+				
 		List<Integer> answer3=new ArrayList<Integer>();
 		answer0.add(1);
 		answer0.add(1);
@@ -165,31 +162,115 @@ public class TestSemanticHarmonySocialNetwork {
 		answer0.add(0);
 		String key3= peer3.createAuserProfileKey(answer3);
 		peer3.join(key3, "peer3");
-		
-		
-	  List<String> friends = peer0.getFriends();
-      List<String> friends1 = peer1.getFriends();
-      List<String> friends2 = peer2.getFriends();
-      List<String> friends3 = peer3.getFriends();
-      
-      //revisionare gli assilt
-      assert(friends.contains("peer1"));
-      assert(friends1.contains("master"));
-      assert(friends3.contains("peer2"));
-      assert(friends2.contains("peer3"));
+				
+	    List<String> friends0 = peer0.getFriends();
+        List<String> friends1 = peer1.getFriends();
+        List<String> friends2 = peer2.getFriends();
+        List<String> friends3 = peer3.getFriends();
 
-      assert(!friends2.contains("master"));
-      assert(!friends3.contains("master"));
-
-      assert(!friends2.contains("peer1"));
-      assert(!friends3.contains("peer1"));
-
-      assert(!friends.contains("peer2"));
-      assert(!friends.contains("peer3"));
-
-      assert(!friends1.contains("peer2"));
-      assert(!friends1.contains("peer3"));
-		
+        assertEquals(0, friends0.size());    
+        assert(friends1.contains("peer3"));    
+        assert(friends2.contains("peer3"));
+        assert(friends3.contains("peer2"));
+        assert(friends3.contains("peer1"));
+  		
 	}
 	
+
+	@Test
+	void testCaseSendMessage_toFriend(TestInfo testInfo){
+		List<Integer> answer0=new ArrayList<Integer>();
+		answer0.add(1);
+		answer0.add(1);
+		answer0.add(1);
+		answer0.add(1);
+		answer0.add(1);
+		answer0.add(1);
+		answer0.add(1);
+		String key= peer0.createAuserProfileKey(answer0);
+		peer0.join(key, "peer0");
+	  
+		List<Integer> answer1=new ArrayList<Integer>();
+		answer1.add(1);
+		answer1.add(1);
+		answer1.add(1);
+		answer1.add(1);
+		answer1.add(1);
+		answer1.add(0);
+		answer1.add(0);
+		String key1= peer1.createAuserProfileKey(answer1);
+		peer1.join(key1, "peer1");
+		
+		boolean flag=peer0.sendMessage("peer1", "message");
+		assertTrue(flag);	
+		boolean flag1=peer1.sendMessage("peer0", "message");
+		assertTrue(flag1);	
+	}
+
+	@Test
+	void testCaseSendMessage_NoFriend(TestInfo testInfo){
+		List<Integer> answer0=new ArrayList<Integer>();
+		answer0.add(1);
+		answer0.add(1);
+		answer0.add(1);
+		answer0.add(1);
+		answer0.add(1);
+		answer0.add(1);
+		answer0.add(1);
+		String key= peer0.createAuserProfileKey(answer0);
+		peer0.join(key, "peer0");
+	  
+		List<Integer> answer1=new ArrayList<Integer>();
+		answer1.add(0);
+		answer1.add(0);
+		answer1.add(0);
+		answer1.add(0);
+		answer1.add(0);
+		answer1.add(0);
+		answer1.add(0);
+		String key1= peer1.createAuserProfileKey(answer1);
+		peer1.join(key1, "peer1");
+		
+		boolean flag=peer0.sendMessage("peer1", "message");
+		assertFalse(flag);	
+		boolean flag1=peer1.sendMessage("peer0", "message");
+		assertFalse(flag1);
+			
+	}
+	
+	
+	@Test
+	void testCaseLeaveNetwork(TestInfo testInfo) {
+		List<Integer> answer0=new ArrayList<Integer>();
+		answer0.add(1);
+		answer0.add(1);
+		answer0.add(1);
+		answer0.add(1);
+		answer0.add(1);
+		answer0.add(1);
+		answer0.add(1);
+		String key= peer0.createAuserProfileKey(answer0);
+		peer0.join(key, "peer0");
+	  
+		List<Integer> answer1=new ArrayList<Integer>();
+		answer1.add(1);
+		answer1.add(1);
+		answer1.add(1);
+		answer1.add(1);
+		answer1.add(1);
+		answer1.add(0);
+		answer1.add(0);
+		String key1= peer1.createAuserProfileKey(answer1);
+		peer1.join(key1, "peer1");
+		
+		
+	    List<String> friends0 = peer0.getFriends();	   
+        assertTrue(friends0.contains("peer1"));    
+	    peer1.leaveNetwork("peer1");
+	    friends0 = peer0.getFriends();
+        assertFalse(friends0.contains("peer1"));
+	   
+	  	
+		
+	}
 }

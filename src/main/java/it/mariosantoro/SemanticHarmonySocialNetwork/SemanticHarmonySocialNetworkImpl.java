@@ -173,11 +173,22 @@ public class SemanticHarmonySocialNetworkImpl implements SemanticHarmonySocialNe
 		
 	 	
         try {
-        	FutureGet futureGet = _dht.get(Number160.createHash(_friend_nick_name)).start().awaitUninterruptibly();
-			User u = (User) futureGet.dataMap().values().iterator().next().object();
-			if(futureGet.isSuccess()&& !futureGet.isEmpty()) {
-				  FutureDirect futureDirect = _dht.peer().sendDirect(u.getPeerAddress()).object("hai un nuovo messaggio da " + _nick_name + ": " + message).start().awaitUninterruptibly();
-                  return true;
+        	//recupero peer corrente dalla dht
+        	FutureGet futureGet = _dht.get(Number160.createHash(_nick_name)).start().awaitUninterruptibly();
+			User sender = (User) futureGet.dataMap().values().iterator().next().object();
+			//per controllare se il nickname inserito sia un su amico 
+			if(sender.getFriends().contains(_friend_nick_name)) {
+				FutureGet futureGet2 = _dht.get(Number160.createHash(_friend_nick_name)).start().awaitUninterruptibly();
+				User reciver = (User) futureGet2.dataMap().values().iterator().next().object();
+				if(futureGet2.isSuccess()&& !futureGet2.isEmpty()) {
+					  FutureDirect futureDirect = _dht.peer().sendDirect(reciver.getPeerAddress()).object("hai un nuovo messaggio da " + _nick_name + ": " + message).start().awaitUninterruptibly();
+	                  return true;				
+			}else {
+				return false;
+			}
+			
+			
+        	
 			}else {
 				
 				return false;

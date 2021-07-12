@@ -118,7 +118,7 @@ public class Example {
 						if(peer.sendMessage(choice, message)) {
 							terminal.printf("Messaggio inviato!\n");
 						}else {
-							terminal.printf("Nickname inesitente\n");
+							terminal.printf("Nickname inesitente o non tra gli amici\n");
 						}
 					}else {
 						terminal.printf("Non ci sono amici con interessi comuni nella rete per ora\n");	
