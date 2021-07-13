@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
 
@@ -112,7 +113,11 @@ public class TestSemanticHarmonySocialNetwork {
 		answer0.add(1);
 		String key= peer0.createAuserProfileKey(answer0);
 		boolean flag= peer0.join(key, "peer0");
-		assertTrue(flag);		
+		assertTrue(flag);	
+		
+		peer0.leaveNetwork();
+      
+         
 	}
 	
 	
@@ -165,15 +170,21 @@ public class TestSemanticHarmonySocialNetwork {
 				
 	    List<String> friends0 = peer0.getFriends();
         List<String> friends1 = peer1.getFriends();
-        List<String> friends2 = peer2.getFriends();
-        List<String> friends3 = peer3.getFriends();
 
+        List<String> friends3 = peer3.getFriends();
+        List<String> friends2 = peer2.getFriends();
+        
+        
         assertEquals(0, friends0.size());    
-        assert(friends1.contains("peer3"));    
+        assert(friends1.contains("peer3"));  
         assert(friends2.contains("peer3"));
         assert(friends3.contains("peer2"));
         assert(friends3.contains("peer1"));
   		
+        peer0.leaveNetwork();
+        peer1.leaveNetwork();
+        peer2.leaveNetwork();
+        peer3.leaveNetwork();
 	}
 	
 
@@ -205,6 +216,10 @@ public class TestSemanticHarmonySocialNetwork {
 		assertTrue(flag);	
 		boolean flag1=peer1.sendMessage("peer0", "message");
 		assertTrue(flag1);	
+		
+		peer0.leaveNetwork();
+        peer1.leaveNetwork();
+ 
 	}
 
 	@Test
@@ -235,6 +250,10 @@ public class TestSemanticHarmonySocialNetwork {
 		assertFalse(flag);	
 		boolean flag1=peer1.sendMessage("peer0", "message");
 		assertFalse(flag1);
+		
+		peer0.leaveNetwork();
+        peer1.leaveNetwork();
+     
 			
 	}
 	
@@ -264,13 +283,17 @@ public class TestSemanticHarmonySocialNetwork {
 		peer1.join(key1, "peer1");
 		
 		
-	    List<String> friends0 = peer0.getFriends();	   
+	    List<String> friends0 = peer0.getFriends();	  	
         assertTrue(friends0.contains("peer1"));    
-	    peer1.leaveNetwork("peer1");
+	    peer1.leaveNetwork();
 	    friends0 = peer0.getFriends();
         assertFalse(friends0.contains("peer1"));
 	   
+	    peer0.leaveNetwork();
+
 	  	
 		
 	}
+	
+	 
 }

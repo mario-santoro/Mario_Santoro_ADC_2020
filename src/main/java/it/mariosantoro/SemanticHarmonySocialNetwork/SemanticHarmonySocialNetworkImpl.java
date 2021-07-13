@@ -169,9 +169,7 @@ public class SemanticHarmonySocialNetworkImpl implements SemanticHarmonySocialNe
 		return distance;
 	}
 	
-	public boolean sendMessage(String _friend_nick_name, String message) {
-		
-	 	
+	public boolean sendMessage(String _friend_nick_name, String message) {			 	
         try {
         	//recupero peer corrente dalla dht
         	FutureGet futureGet = _dht.get(Number160.createHash(_nick_name)).start().awaitUninterruptibly();
@@ -182,13 +180,11 @@ public class SemanticHarmonySocialNetworkImpl implements SemanticHarmonySocialNe
 				User reciver = (User) futureGet2.dataMap().values().iterator().next().object();
 				if(futureGet2.isSuccess()&& !futureGet2.isEmpty()) {
 					  FutureDirect futureDirect = _dht.peer().sendDirect(reciver.getPeerAddress()).object("hai un nuovo messaggio da " + _nick_name + ": " + message).start().awaitUninterruptibly();
-	                  return true;				
-			}else {
-				return false;
-			}
-			
-			
-        	
+					  return true;				
+				}else {
+					  return false;
+				}
+							        	
 			}else {
 				
 				return false;
@@ -206,7 +202,7 @@ public class SemanticHarmonySocialNetworkImpl implements SemanticHarmonySocialNe
 	
 	//da capire bene
 	@SuppressWarnings("unchecked")
-	public boolean leaveNetwork(String _nick_name){
+	public boolean leaveNetwork(){
 		List<String> users;
 		try {
 			FutureGet futureGet = _dht.get(Number160.createHash("users")).start();

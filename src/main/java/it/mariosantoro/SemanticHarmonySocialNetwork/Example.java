@@ -98,13 +98,14 @@ public class Example {
 							terminal.printf("%s\n", friends.get(i));							
 						}						
 					}else {
-						terminal.printf("Non ci sono amici con interessi comuni nella rete per ora\n");	
+						terminal.printf("Warning. Non ci sono amici con interessi comuni nella rete per ora\n");	
 					}
 					break;
 				case 2:
-					terminal.printf("\nA quale amico vuoi mandare il messaggio:\n");
+				
 					friends= peer.getFriends();
 					if(friends!=null && friends.size()>0) {
+						terminal.printf("\nA quale amico vuoi mandare il messaggio:\n");
 						for(int i=0;i<friends.size();i++) {
 							terminal.printf("%s\n", friends.get(i));							
 						}
@@ -118,10 +119,10 @@ public class Example {
 						if(peer.sendMessage(choice, message)) {
 							terminal.printf("Messaggio inviato!\n");
 						}else {
-							terminal.printf("Nickname inesitente o non tra gli amici\n");
+							terminal.printf("ERRORE. Nickname inesitente o non tra gli amici\n");
 						}
 					}else {
-						terminal.printf("Non ci sono amici con interessi comuni nella rete per ora\n");	
+						terminal.printf("Warning. Non ci sono amici con interessi comuni nella rete per ora\n");	
 					}
 					 
 					break;
@@ -129,7 +130,7 @@ public class Example {
 					terminal.printf("\nSei sicuro di uscire dalla rete?\n");
 					boolean exit = textIO.newBooleanInputReader().withDefaultValue(false).read("exit?");
 					if(exit) {
-						peer.leaveNetwork(_nickname);
+						peer.leaveNetwork();
 						System.exit(0);
 					}
 					break;
