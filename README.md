@@ -5,7 +5,7 @@ Progetto è stato assegnato in maniera casuale prendendo il primo carattere gene
 ## Prerequisiti
 <ul>
   <li>Java 7 o superiore</li>
-  <li>Apache Maven</li>
+  <li><a href="https://maven.apache.org/">Apache Maven</a></li>
  </ul>
 
 ## Descrizione
