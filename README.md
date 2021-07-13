@@ -47,10 +47,20 @@ Progettare e sviluppare un social network basato sugli interessi dell'utente che
 	</dependencies>
 ```
 <p> Il package src/main/java/it.mariosantro.SemanricHarmonySocialNetwork/ fornisce 5 classi:</p>
+ <ul>
+	<li>MessageListener un'interfaccia per il listener di messaggi ricevuti da un peer.</li>
+	<li>SemanticHarmonySocialNetwork un'interfaccia che definisce il social network.</li>
+	<li>SemanticHarmonySocialNetworkImpl un'implementazione dell'interfaccia SemanticHarmonySocialNetwork che sfrutta la libreria TomP2P.</li>
+	<li>User l'oggetto con le informazioni degli utenti del social network.</li>
+	<li>Example la classe che usa l'implemetazione SemanticHarmonySocialNetworkImpl</li>
+</ul>
+ 
  
  ## Soluzione
  
  ## Build your app in a Docker container
+ <p>Viene fornita un'applicazione di esempio utilizzando il contenitore Docker, in esecuzione su un computer locale. Vedi il Dockerfile, per i dettagli della costruzione.</p>
+ <p>Prima di tutto puoi costruire il tuo container docker:</p>
  
  ## Testing
 
