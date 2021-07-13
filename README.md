@@ -65,7 +65,7 @@ Progettare e sviluppare un social network basato sugli interessi dell'utente che
  ```
  docker build --no-cache -t shsn .
  ```
- <p><b>Start del master peer</b></p>
+### Avvio del master peer 
  
 <p>Successivamente è possibile avviare il master peer, in modalità interattiva (-i) e con due (-e) variabili d'ambiente:</p>
  ```
@@ -77,6 +77,13 @@ docker run -i --name MASTER-PEER -e MASTERIP="127.0.0.1" -e ID=0 shsn
 ```
 docker start -i MASTER-PEER
 ```  
+
+### Avvio di un generico peer
+All'avvio del master devi controllare l'indirizzo IP del tuo container:
+<ul>
+	<li>Check del docker: ```docker ps```  </li>
+	<li>Check del indirizzo IP: ```docker inspect <container ID>```   </li>
+</ul>
  ## Testing
 
  
