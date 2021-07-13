@@ -46,7 +46,7 @@ Progettare e sviluppare un social network basato sugli interessi dell'utente che
 		</dependency>
 	</dependencies>
 ```
-<p> Il package src/main/java/it.mariosantro.SemanricHarmonySocialNetwork/ fornisce 5 classi:</p>
+<p> Il package src/main/java/it.mariosantro.SemanticHarmonySocialNetwork/ fornisce 5 classi:</p>
  <ul>
 	<li>MessageListener un'interfaccia per il listener di messaggi ricevuti da un peer.</li>
 	<li>SemanticHarmonySocialNetwork un'interfaccia che definisce il social network.</li>
@@ -62,6 +62,18 @@ Progettare e sviluppare un social network basato sugli interessi dell'utente che
  <p>Viene fornita un'applicazione di esempio utilizzando il contenitore Docker, in esecuzione su un computer locale. Vedi il Dockerfile, per i dettagli della costruzione.</p>
  <p>Prima di tutto puoi costruire il tuo container docker:</p>
  
+ ```
+ docker build --no-cache -t shsn .
+ ```
+ <p><b>Start del master peer</b></p>
+ 
+<p>Successivamente è possibile avviare il master peer, in modalità interattiva (-i) e con due (-e) variabili d'ambiente:</p>
+ ```
+docker run -i --name MASTER-PEER -e MASTERIP="127.0.0.1" -e ID=0 shsn
+ ```
+<p>la variabile d'ambiente MASTERIP è l'indirizzo IP del peer master e la variabile d'ambiente ID è l'id univoco del tuo peer. Ricorda che devi eseguire il peer master utilizzando l'ID = 0. </p> 
+
+<p><b>Nota:</b> dopo il primo avvio, è possibile lanciare il masteer peer usando il comando seguente: ```docker start -i MASTER-PEER```. </p>
  ## Testing
 
  
