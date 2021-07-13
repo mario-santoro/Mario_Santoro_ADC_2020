@@ -82,13 +82,21 @@ docker start -i MASTER-PEER
 All'avvio del master devi controllare l'indirizzo IP del tuo container:
 <ul>
 	<li>Check del docker:
-	```
-	docker ps
-	```  
-	</li>
-	<li>Check del indirizzo IP: ```docker inspect <container ID>```   </li>
+		```
+docker ps
+```  
+		docker ps</li>
+	<li>Check del indirizzo IP: docker inspect <container ID></li>
 </ul>
+Ora puoi avviare i tuoi peer variando il peer ID univoco:
+```
+docker run -i --name PEER-1 -e MASTERIP="172.17.0.2" -e ID=1 shsn
+```  
 
+<b>Nota:</b> dopo il primo avvio, è possibile lanciare il peer usando il comando seguente:   
+```
+docker start -i PEER-1
+```  
  ## Testing
 
  
