@@ -31,14 +31,14 @@ public class Example {
 
 		class MessageListenerImpl implements MessageListener{
 			int peerid;
-		
+
 			public MessageListenerImpl(int peerid)
 			{
 				this.peerid=peerid;
 
 			}
 			public Object parseMessage(Object obj) {
-				
+
 				TextIO textIO = TextIoFactory.getTextIO();
 				TextTerminal terminal = textIO.getTextTerminal();
 				terminal.printf("\n"+peerid+"] (Direct Message Received) "+obj+"\n\n");
@@ -55,36 +55,36 @@ public class Example {
 			TextTerminal terminal = textIO.getTextTerminal();
 			SemanticHarmonySocialNetworkImpl peer = 
 					new SemanticHarmonySocialNetworkImpl(id, master, new MessageListenerImpl(id));
-			
+
 			terminal.printf("\nStaring peer id: %d on master node: %s\n",
 					id, master);
 			String _nickname = "";
-			
+
 			terminal.printf("Ciao ti faremo una serie di domande per trovare amici con interessi comuni, rispondi con un numero: 1 (mi piace) oppure 0 (non mi piace)\n");
-			 
-			 List<String> questions= peer.getUserProfileQuestions();
-			 List<Integer> answer= new ArrayList<Integer>();
-			 List<String> friends;
-			 for(int i=0; i<questions.size();i++) {
+
+			List<String> questions= peer.getUserProfileQuestions();
+			List<Integer> answer= new ArrayList<Integer>();
+			List<String> friends;
+			for(int i=0; i<questions.size();i++) {
 				terminal.printf( questions.get(i));
 				answer.add( textIO.newIntInputReader()
 						.withMaxVal(1)
 						.withMinVal(0)
 						.read("Scelta"));
-			 }
-			 
+			}
+
 			terminal.printf("\nInserisci un nickname\n");
-			 _nickname = textIO.newStringInputReader().read("Nickname:");
+			_nickname = textIO.newStringInputReader().read("Nickname:");
 			String profile_key= peer.createAuserProfileKey(answer);			 
 			while(!peer.join(profile_key, _nickname)) {
 				terminal.printf("Nickname esistente. Per favore riprova.\n");
-				 _nickname = textIO.newStringInputReader()
-					        .read("Nickname:");
+				_nickname = textIO.newStringInputReader()
+						.read("Nickname:");
 			}
 			terminal.printf("\nAcesso eseguito! Benvenuto!!\n");	
 			while(true) {
 				printMenu(terminal);
-				
+
 				int option = textIO.newIntInputReader()
 						.withMaxVal(3)
 						.withMinVal(1)
@@ -92,7 +92,7 @@ public class Example {
 				switch (option) {
 				case 1:
 					terminal.printf("\nEcco i tuoi amici:\n");
-				    friends= peer.getFriends();
+					friends= peer.getFriends();
 					if(friends!=null && friends.size()>0) {
 						for(int i=0;i<friends.size();i++) {
 							terminal.printf("%s\n", friends.get(i));							
@@ -102,20 +102,20 @@ public class Example {
 					}
 					break;
 				case 2:
-				
+
 					friends= peer.getFriends();
 					if(friends!=null && friends.size()>0) {
 						terminal.printf("\nA quale amico vuoi mandare il messaggio:\n");
 						for(int i=0;i<friends.size();i++) {
 							terminal.printf("%s\n", friends.get(i));							
 						}
-				 
+
 						String choice= textIO.newStringInputReader()
-						        .read("Nickname:");
+								.read("Nickname:");
 						terminal.printf("\nScrivi messaggio\n");
 						String message = textIO.newStringInputReader()
-						        .withDefaultValue("default-message")
-						        .read(" Message:");
+								.withDefaultValue("default-message")
+								.read(" Message:");
 						if(peer.sendMessage(choice, message)) {
 							terminal.printf("Messaggio inviato!\n");
 						}else {
@@ -124,7 +124,7 @@ public class Example {
 					}else {
 						terminal.printf("Warning. Non ci sono amici con interessi comuni nella rete per ora\n");	
 					}
-					 
+
 					break;
 				case 3:
 					terminal.printf("\nSei sicuro di uscire dalla rete?\n");
@@ -141,7 +141,7 @@ public class Example {
 			}
 
 
-		
+
 
 		}  
 		catch (CmdLineException clEx)  
@@ -152,7 +152,7 @@ public class Example {
 
 	}
 	public static void printMenu(TextTerminal terminal) {
-	
+
 		terminal.printf("\n1 - LISTA DI AMICI\n"); 
 		terminal.printf("\n2 - INVIO MESSAGGIO\n"); 
 		terminal.printf("\n3 - EXIT\n");
