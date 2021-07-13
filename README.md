@@ -81,11 +81,7 @@ docker start -i MASTER-PEER
 ### Avvio di un generico peer
 All'avvio del master devi controllare l'indirizzo IP del tuo container:
 <ul>
-	<li>Check del docker:
-		```
-docker ps
-```  
-		docker ps</li>
+	<li>Check del docker: docker ps</li>
 	<li>Check del indirizzo IP: docker inspect <container ID></li>
 </ul>
 Ora puoi avviare i tuoi peer variando il peer ID univoco:
