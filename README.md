@@ -68,9 +68,11 @@ Progettare e sviluppare un social network basato sugli interessi dell'utente che
 ### Avvio del master peer 
  
 <p>Successivamente è possibile avviare il master peer, in modalità interattiva (-i) e con due (-e) variabili d'ambiente:</p>
+
  ```
 docker run -i --name MASTER-PEER -e MASTERIP="127.0.0.1" -e ID=0 shsn
  ```
+ 
 <p>la variabile d'ambiente MASTERIP è l'indirizzo IP del peer master e la variabile d'ambiente ID è l'id univoco del tuo peer. Ricorda che devi eseguire il peer master utilizzando l'ID = 0. </p> 
 
 <b>Nota:</b> dopo il primo avvio, è possibile lanciare il masteer peer usando il comando seguente:   
