@@ -13,13 +13,14 @@ Progettare e sviluppare un social network basato sugli interessi dell'utente che
 
 ## Tecnologie
 <img align="center" height="500" src="https://github.com/mario-santoro/SemanticsHarmonySocialNetwork/blob/main/tecnologie.png?raw=true" >
- <br>
+
  <p>Documentazione TomP2P disponibile <a href="https://tomp2p.net/doc/">qui</a>. 
   <br> Per il testing è stato usato il framework JUnit, documentazione disponibile <a href="https://junit.org/junit4/javadoc/latest/index.html">qui</a>.</p>
 
  ## Project Structure
  
 <p>Usando Maven puoi aggiungere le dipendenze a TomP2P nel file pom.xml.</p>
+
  ```
 <repositories>
 		<repository>
@@ -45,7 +46,7 @@ Progettare e sviluppare un social network basato sugli interessi dell'utente che
 		</dependency>
 	</dependencies>
 ```
- Il package src/main/java/it.mariosantro.SemanricHarmonySocialNetwork/ fornisce 5 classi:
+<p> Il package src/main/java/it.mariosantro.SemanricHarmonySocialNetwork/ fornisce 5 classi:</p>
  
  ## Soluzione
  
