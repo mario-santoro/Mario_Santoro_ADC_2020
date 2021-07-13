@@ -73,7 +73,10 @@ docker run -i --name MASTER-PEER -e MASTERIP="127.0.0.1" -e ID=0 shsn
  ```
 <p>la variabile d'ambiente MASTERIP è l'indirizzo IP del peer master e la variabile d'ambiente ID è l'id univoco del tuo peer. Ricorda che devi eseguire il peer master utilizzando l'ID = 0. </p> 
 
-<p><b>Nota:</b> dopo il primo avvio, è possibile lanciare il masteer peer usando il comando seguente: ```docker start -i MASTER-PEER```. </p>
+<b>Nota:</b> dopo il primo avvio, è possibile lanciare il masteer peer usando il comando seguente:   
+```
+docker start -i MASTER-PEER
+```  
  ## Testing
 
  
