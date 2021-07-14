@@ -104,7 +104,7 @@ docker run -i --name PEER-1 -e MASTERIP="172.17.0.2" -e ID=1 shsn
 docker start -i PEER-1
 ```  
  ## Testing
- Sono stati creati casi di test per ogni funzionalità tramite @Test per eseguirlo con JUnit: 
+ Sono stati creati casi di test per ogni funzionalità tramite <b>@Test</b> per eseguirlo con JUnit: 
  <ul>
 	<li><b>TestCaseGetUserProfileQuestions</b>: utenti ricevono la lista di domande, che ci aspettiamo lunga 7, non vuota e tutte uguali per ogni utente.</li>
 	<li><b>TestCaseCreateAuserProfileKey</b>: per ogni utente viene generata la ProfileKey che ci aspettiamo che sia per tutti lunga 7 caratteri, e non vuota. Inoltre ci aspettiamo che se un utente ha risposto a tutte le domande con 1, la ProfileKey sia '1111111'.</li>
@@ -116,5 +116,5 @@ docker start -i PEER-1
 	<li><b>TestCaseLeaveNetwork</b>: ci sono due uenti che sono tra loro amici, uno di questi abbandona la rete, ci aspettiamo che non sia più visibile nella lista di amici dell'utente restante.</li> 
 </ul>
  
-<b>finish</b>: una funzione che usa @AfterEach per far lasciare la rete a tutti i peer alla fine di ogni test fatto.
+Con <b>@AfterEach</b> viene chiamata, alla fine di ogni test fatto, la funzione <b>finish</b> per far lasciare la rete a tutti i peer.
   
