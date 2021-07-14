@@ -210,7 +210,7 @@ public class SemanticHarmonySocialNetworkImpl implements SemanticHarmonySocialNe
 		List<String> users;
 		try {
 		
-			_dht.remove(Number160.createHash(_nick_name));			
+			_dht.remove(Number160.createHash(_nick_name)).start().awaitUninterruptibly();			
 			FutureGet futureGet = _dht.get(Number160.createHash("users")).start();
 			futureGet.awaitUninterruptibly();		      
 			users = (List<String>) futureGet.dataMap().values().iterator().next().object();
