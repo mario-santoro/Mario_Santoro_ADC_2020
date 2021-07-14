@@ -46,13 +46,13 @@ Progettare e sviluppare un social network basato sugli interessi dell'utente che
 		</dependency>
 	</dependencies>
 ```
-<p> Il package src/main/java/it.mariosantro.SemanticHarmonySocialNetwork/ fornisce 5 classi:</p>
+<p> Il package <b>src/main/java/it.mariosantro.SemanticHarmonySocialNetwork/</b> fornisce 5 classi:</p>
  <ul>
-	<li>MessageListener un'interfaccia per il listener di messaggi ricevuti da un peer.</li>
-	<li>SemanticHarmonySocialNetwork un'interfaccia che definisce il social network.</li>
-	<li>SemanticHarmonySocialNetworkImpl un'implementazione dell'interfaccia SemanticHarmonySocialNetwork che sfrutta la libreria TomP2P.</li>
-	<li>User l'oggetto con le informazioni degli utenti del social network.</li>
-	<li>Example la classe che usa l'implemetazione SemanticHarmonySocialNetworkImpl</li>
+	<li><b>MessageListener</b>: un'interfaccia per il listener di messaggi ricevuti da un peer.</li>
+	<li><b>SemanticHarmonySocialNetwork</b>: un'interfaccia che definisce il social network.</li>
+	<li><b>SemanticHarmonySocialNetworkImpl</b>: un'implementazione dell'interfaccia SemanticHarmonySocialNetwork che sfrutta la libreria TomP2P.</li>
+	<li><b>User</b>: l'oggetto con le informazioni degli utenti del social network.</li>
+	<li><b>Example</b>: la classe che usa l'implemetazione SemanticHarmonySocialNetworkImpl</li>
 </ul>
  
  
