@@ -89,6 +89,7 @@ public class SemanticHarmonySocialNetworkImpl implements SemanticHarmonySocialNe
 			//controllo che il nickname non sia già assegnato 
 			FutureGet futureGet = _dht.get(Number160.createHash(_nick_name)).start();
 			futureGet.awaitUninterruptibly();
+		
 			if( futureGet.isEmpty()) {	
 
 				//recupero dalla dht la lista delgi utenti (loro nickname)
@@ -208,12 +209,14 @@ public class SemanticHarmonySocialNetworkImpl implements SemanticHarmonySocialNe
 	public boolean leaveNetwork(){
 		List<String> users;
 		try {
+		
+			_dht.remove(Number160.createHash(_nick_name));			
 			FutureGet futureGet = _dht.get(Number160.createHash("users")).start();
 			futureGet.awaitUninterruptibly();		      
 			users = (List<String>) futureGet.dataMap().values().iterator().next().object();
 			users.remove(_nick_name);
 			_dht.put(Number160.createHash("users")).data(new Data(users)).start().awaitUninterruptibly();	       
-			_dht.remove(Number160.createHash(_nick_name));
+			
 
 		 
 			for(int i=0;i<users.size();i++) {
@@ -234,7 +237,7 @@ public class SemanticHarmonySocialNetworkImpl implements SemanticHarmonySocialNe
 			e.printStackTrace();
 		}
 
-		_dht.peer().shutdown();
+		_dht.peer().shutdown().awaitUninterruptibly();
 		return true;
 	}
 
