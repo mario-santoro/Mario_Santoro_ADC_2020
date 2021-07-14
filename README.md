@@ -104,15 +104,13 @@ docker run -i --name PEER-1 -e MASTERIP="172.17.0.2" -e ID=1 shsn
 docker start -i PEER-1
 ```  
  ## Testing
+ Sono stati creati casi di test per ogni funzionalità tramite <b>@Test</b> per eseguirlo con JUnit: 
  <ul>
-	<li><b>TestCaseGetUserProfileQuestions</b>: un utente appena accede deve rispondere ad una serie di domande restituite da questo metodo.</li>
-	<li><b>TestCaseCreateAuserProfileKey</b>: appena le domande vengono risposte dall'utente, viene generata una chiave del profilo in base alle risposte.</li>
-	<li><b>TestCaseJoin</b>: a questo punto l'utente può unirsi alla rete, con questo metodo inseriamo il nuovo utente nel social tramite il nickname (in caso è già presente dovrà sceglierne un altro) e il profileKey. Quest'ultima sarà usata per trovare gli amici (altri utenti con interessi comuni) 		calcolando la distanza di hamming. Le persone con cui è avvenuto il match riceveranno una notifica di una nuoca amicizia.</li>
-	<li><b>TestCaseGetFriends</b>: dopo aver fatto la join alla rete l'utente può vedere la lista dei suoi amici tramite questo metodo.</li>
-	<li><b>TestCaseSendMessage_toFriend</b>:  dopo aver fatto la join alla rete l'utente può mandare messaggi (solo) ai sui amici inserendo il loro nickname.</li>
-	<li><b>TestCaseSendMessage_NoFriend</b>:  dopo aver fatto la join alla rete l'utente può mandare messaggi (solo) ai sui amici inserendo il loro nickname.</li>
-	<li><b>TestCaseLeaveNetwork</b>: un utente può abbandonare la rete, così facendo verrà segnalato ai suoi amici che ha lasciato la rete e il suo nickname scomparirà dalla loro lista.</li> 
-	<li><b>finish</b>: usa @AfterEach per far lasciare la rete a tutti i peer alla fine di ogni test fatto.</li> 
+	<li><b>TestCaseGeneral</b>: gli utenti ricevono la lista di domande, che ci aspettiamo lunga 7, non vuota e tutte uguali per ogni utente. Dopodiché per ogni utente viene generata la ProfileKey che ci aspettiamo che sia per tutti lunga 7 caratteri, e non vuota. Inoltre ci aspettiamo che se un utente ha risposto a tutte le domande con 1, la ProfileKey sia '1111111'. Infine se gli utenti con nickname diversi provano ad unirsi alla rete, ci attendiamo che la funzioni ritorni true per avvenuta unione, mentre se un utente prova ad unirsi con un nickname esistente ci attendiamo che la funzioni ritorni false poiché non possono esserci due utenti con lo stesso nickname.</li>
+	<li><b>TestCaseGetFriends</b>: ci aspettiamo che ogni utente veda solo ed esclusivamente i suoi amici.</li>
+	<li><b>TestCaseSendMessage</b>: due utenti che sono amici inviano un messaggio l'uno all'altro, ci aspettiamo che il metodo restituisca true per avvenuto invio, mentre un utente che tenta di inviare un messaggio ad un altro che non è un amico, ci aspettiamo che il metodo restituisca false poiché è possibile inviare messaggi soltanto agli amici.</li>
+	<li><b>TestCaseLeaveNetwork</b>: utenti tra loro amici, quando uno di questi abbandona la rete, ci aspettiamo che non sia più visibile nella lista di amici degli utenti restanti.</li> 
 </ul>
  
+Con <b>@AfterEach</b> viene chiamata, alla fine di ogni test fatto, la funzione <b>finish</b> per far lasciare la rete a tutti i peer.
   
