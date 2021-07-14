@@ -104,6 +104,15 @@ docker run -i --name PEER-1 -e MASTERIP="172.17.0.2" -e ID=1 shsn
 docker start -i PEER-1
 ```  
  ## Testing
-
+ <ul>
+	<li><b>TestCaseGetUserProfileQuestions</b>: un utente appena accede deve rispondere ad una serie di domande restituite da questo metodo.</li>
+	<li><b>TestCaseCreateAuserProfileKey</b>: appena le domande vengono risposte dall'utente, viene generata una chiave del profilo in base alle risposte.</li>
+	<li><b>TestCaseJoin</b>: a questo punto l'utente può unirsi alla rete, con questo metodo inseriamo il nuovo utente nel social tramite il nickname (in caso è già presente dovrà sceglierne un altro) e il profileKey. Quest'ultima sarà usata per trovare gli amici (altri utenti con interessi comuni) 		calcolando la distanza di hamming. Le persone con cui è avvenuto il match riceveranno una notifica di una nuoca amicizia.</li>
+	<li><b>TestCaseGetFriends</b>: dopo aver fatto la join alla rete l'utente può vedere la lista dei suoi amici tramite questo metodo.</li>
+	<li><b>TestCaseSendMessage_toFriend</b>:  dopo aver fatto la join alla rete l'utente può mandare messaggi (solo) ai sui amici inserendo il loro nickname.</li>
+	<li><b>TestCaseSendMessage_NoFriend</b>:  dopo aver fatto la join alla rete l'utente può mandare messaggi (solo) ai sui amici inserendo il loro nickname.</li>
+	<li><b>TestCaseLeaveNetwork</b>: un utente può abbandonare la rete, così facendo verrà segnalato ai suoi amici che ha lasciato la rete e il suo nickname scomparirà dalla loro lista.</li> 
+	<li><b>finish</b>: usa @AfterEach per far lasciare la rete a tutti i peer alla fine di ogni test fatto.</li> 
+</ul>
  
   
