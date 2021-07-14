@@ -57,6 +57,14 @@ Progettare e sviluppare un social network basato sugli interessi dell'utente che
  
  
  ## Soluzione
+ <ul>
+	<li><b>getUserProfileQuestions</b>: un utente appena accede deve rispondere ad una serie di domande restituite da questo metodo.</li>
+	<li><b>createAuserProfileKey</b>: appena le domande vengono risposte dall'utente, viene generata una chiave del profilo in base alle risposte.</li>
+	<li><b>join</b>: a questo punto l'utente può unirsi alla rete, con questo metodo inseriamo il nuovo utente nel social tramite il nickname (in caso è già presente dovrà sceglierne un altro) e il profileKey. Quest'ultima sarà usata per trovare gli amici (altri utenti con interessi comuni) calcolando la distanza di hamming. Le persone con cui è avvenuto il match riceveranno una notifica di una nuoca amicizia.</li>
+	<li><b>getFriends</b>: dopo aver fatto la join alla rete l'utente può vedere la lista dei suoi amici tramite questo metodo.</li>
+	<li><b>sendMessage</b>:  dopo aver fatto la join alla rete l'utente può mandare messaggi (solo) ai sui amici inserendo il loro nickname.</li>
+	<li><b>leaveNetwork</b>: un utente può abbandonare la rete, così facendo verrà segnalato ai suoi amici che ha lasciato la rete e il suo nickname scomparirà dalla loro lista.</li> 
+</ul>
  
  ## Build your app in a Docker container
  <p>Viene fornita un'applicazione di esempio utilizzando il contenitore Docker, in esecuzione su un computer locale. Vedi il Dockerfile, per i dettagli della costruzione.</p>
