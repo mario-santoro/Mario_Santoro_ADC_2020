@@ -97,6 +97,19 @@ public class TestSemanticHarmonySocialNetwork {
 		assertNotNull(key2);
 		assertEquals(7, key2.length());
 		assertEquals("1110001", key2);
+		
+		List<Integer> answer3=new ArrayList<Integer>();
+		answer3.add(1);
+		answer3.add(1);
+		answer3.add(0);
+		answer3.add(0);
+		answer3.add(0);
+		answer3.add(0);
+		answer3.add(0);
+		String key3=peer3.createAuserProfileKey(answer3);
+		assertNotNull(key3);
+		assertEquals(7, key3.length());
+		assertEquals("1100000", key3);
 
 	}
 
@@ -116,8 +129,44 @@ public class TestSemanticHarmonySocialNetwork {
 		boolean flag= peer0.join(key, "peer0");
 		assertTrue(flag);	
 
- 
+		 	
+		List<Integer> answer1=new ArrayList<Integer>();
+		answer1.add(0);
+		answer1.add(0);
+		answer1.add(0);
+		answer1.add(0);
+		answer1.add(0);
+		answer1.add(0);
+		answer1.add(0);
+		String key1=peer1.createAuserProfileKey(answer1);
+		boolean flag1= peer1.join(key1, "peer1");
+		assertTrue(flag1);	
 
+		List<Integer> answer2=new ArrayList<Integer>();
+		answer2.add(1);
+		answer2.add(1);
+		answer2.add(1);
+		answer2.add(0);
+		answer2.add(0);
+		answer2.add(0);
+		answer2.add(1);
+		String key2=peer2.createAuserProfileKey(answer2);
+		boolean flag2= peer2.join(key2, "peer2");
+		assertTrue(flag2);	
+		
+		
+		List<Integer> answer3=new ArrayList<Integer>();
+		answer3.add(1);
+		answer3.add(1);
+		answer3.add(0);
+		answer3.add(0);
+		answer3.add(0);
+		answer3.add(0);
+		answer3.add(0);
+		String key3=peer3.createAuserProfileKey(answer3);
+		boolean flag3= peer3.join(key3, "peer3");
+		assertTrue(flag3);	
+ 
 
 	}
 	@Test
@@ -146,8 +195,11 @@ public class TestSemanticHarmonySocialNetwork {
 
 		peer1.join(key1, "peer1");
 
- 
 
+		boolean flag=peer0.sendMessage("peer1", "message");
+		assertFalse(flag);	
+		boolean flag1=peer1.sendMessage("peer0", "message");
+		assertFalse(flag1);	
 
 	}
 
